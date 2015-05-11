@@ -7,12 +7,33 @@
 //
 
 #import "RoundsViewController.h"
+#import "RoundsController.h"
+
+
 
 @interface RoundsViewController ()
 
 @end
 
 @implementation RoundsViewController
+
+
++ (instancetype)sharedInstance
+{
+    static RoundsController *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[RoundsController alloc] init];
+    });
+    
+    return sharedInstance;
+    
+    
+
+    
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

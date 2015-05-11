@@ -8,6 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
+
+
+
+
 @interface TimerViewController : UIViewController
+
+
+@property (weak, nonatomic) IBOutlet UILabel *timerLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *timerButton;
+
+
+
+- (IBAction)timerTapped:(id)sender;
+
+- (void)updateTimerLabel;
+
+
+
 
 @end
