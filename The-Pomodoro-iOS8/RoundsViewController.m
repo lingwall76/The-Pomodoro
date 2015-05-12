@@ -8,32 +8,95 @@
 
 #import "RoundsViewController.h"
 #import "RoundsController.h"
+#import "Timer.h"
 
 
 
-@interface RoundsViewController ()
+@interface RoundsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
 @implementation RoundsViewController
 
 
-+ (instancetype)sharedInstance
-{
-    static RoundsController *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[RoundsController alloc] init];
-    });
-    
-    return sharedInstance;
-    
-    
 
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath  {
+    RoundsController *roundsController = [RoundsController sharedInstance];
+    roundsController.currentRound = indexPath.row;
+    [roundsController roundSelected];
+    Timer *timerController = [Timer sharedInstance];
+    [timerController cancelTimer];
+
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section  {
+    RoundsController *roundsController = [RoundsController sharedInstance];
+    
+    NSArray *array = [roundsController roundTimes];
+
+    return [array count];
     
 }
 
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
+    UITableViewCell *tableViewCell = [tableView dequeueReusableCellWithIdentifier:@"Some string"];
+    if (tableViewCell == nil) {
+        tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Some string"];
+    
+    }
+    RoundsController *roundsController = [RoundsController sharedInstance];
+    
+    NSArray *array = [roundsController roundTimes];
 
+    tableViewCell.textLabel.text = [NSString stringWithFormat:@"%d", array[indexPath.row]];
+    return tableViewCell;
+}
+
+
+- (instancetype)init  {
+    self = [super init];
+    if (self) {
+    self.tableView = [UITableView new];
+        [self.view addSubview:self.tableView];
+
+    }
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(roundComplete)
+               name:timerCompletedNotification
+             object:nil];
+    
+    
+    
+    return self;
+}
+
+
+- (void)roundComplete {
+    RoundsController *roundsController = [RoundsController sharedInstance];
+    NSArray *array = [roundsController roundTimes];
+    if (roundsController.currentRound >= [array count])
+    
+    {
+        roundsController.currentRound = 0;
+        NSIndexPath *newObject = [NSIndexPath indexPathForRow:roundsController.currentRound inSection:0];
+    
+        
+        [self.tableView selectRowAtIndexPath:newObject animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        [roundsController roundSelected];
+    
+    }else{
+        
+        roundsController.currentRound++;
+        NSIndexPath *newObject = [NSIndexPath indexPathForRow:roundsController.currentRound inSection:0];
+
+        
+        [self.tableView selectRowAtIndexPath:newObject animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        [roundsController roundSelected];
+        
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

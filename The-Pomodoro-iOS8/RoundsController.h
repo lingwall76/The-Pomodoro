@@ -17,5 +17,6 @@
 
 
 + (instancetype)sharedInstance;
+- (void)roundSelected;
 
 @end
