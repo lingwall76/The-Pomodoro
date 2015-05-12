@@ -37,24 +37,25 @@
     
     if (!timer.isOn) {
     [timer startTimer];
+    }
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(newRound)
+               name:newRoundNotification
+             object:nil];
+    }
+    return self;
+}
+
+- (void)newRound  {
+   Timer *newTimer = [Timer sharedInstance];
+   //newTimer.isOn = YES;
 }
     
-    - (instancetype)init;  {
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(newRound)
-                   name:newRoundNotification
-                 object:nil];
-        
-        
-    }
-    - (void)newRound  {
-        
-        Timer *newTimer = [Timer sharedInstance];
-        newTimer.isOn = YES;
-        
-        
-    }
-
 /*
 #pragma mark - Navigation
 

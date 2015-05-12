@@ -35,39 +35,95 @@
     RoundsController *roundsController = [RoundsController sharedInstance];
     
     NSArray *array = [roundsController roundTimes];
-
     return [array count];
     
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
-    UITableViewCell *tableViewCell = [tableView dequeueReusableCellWithIdentifier:@"Some string"];
+    UITableViewCell *tableViewCell = [tableView dequeueReusableCellWithIdentifier:@"tableViewCellID"];
+    
     if (tableViewCell == nil) {
-        tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Some string"];
+        tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tableViewCellID"];
     
     }
     RoundsController *roundsController = [RoundsController sharedInstance];
     
     NSArray *array = [roundsController roundTimes];
 
-    tableViewCell.textLabel.text = [NSString stringWithFormat:@"%d", array[indexPath.row]];
+    tableViewCell.textLabel.text = [NSString stringWithFormat:@"%d", (int)array[indexPath.row]];
     return tableViewCell;
 }
 
 
 - (instancetype)init  {
     self = [super init];
+    
+    if (self.view) {
+        NSLog(@"self.view exists!");
+    } else {
+        NSLog(@"self.view doesn't exist!");
+    }
+    
     if (self) {
-    self.tableView = [UITableView new];
+        self.tableView = [UITableView new];
         [self.view addSubview:self.tableView];
+        
+        self.tableView.frame = [[UIScreen mainScreen] bounds];
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        
+        NSMutableArray *constraintsMutArr = [NSMutableArray new];
+        
+        [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        NSLayoutConstraint *xLeftPosConstraint = [NSLayoutConstraint
+                                              constraintWithItem:self.tableView
+                                              attribute:NSLayoutAttributeLeft
+                                              relatedBy:NSLayoutRelationEqual
+                                              toItem:self.view
+                                              attribute:NSLayoutAttributeLeftMargin
+                                              multiplier:1.0
+                                              constant:0.0];
+        [constraintsMutArr addObject:xLeftPosConstraint];
+        
+        NSLayoutConstraint *yTopPosConstraint = [NSLayoutConstraint
+                                              constraintWithItem:self.tableView
+                                              attribute:NSLayoutAttributeTop
+                                              relatedBy:NSLayoutRelationEqual
+                                              toItem:self.topLayoutGuide
+                                              attribute:NSLayoutAttributeBottom
+                                              multiplier:1.0
+                                              constant:10.0];
+        [constraintsMutArr addObject:yTopPosConstraint];
+        
+        [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        NSLayoutConstraint *xRightPosConstraint = [NSLayoutConstraint
+                                              constraintWithItem:self.tableView
+                                              attribute:NSLayoutAttributeRight
+                                              relatedBy:NSLayoutRelationEqual
+                                              toItem:self.view
+                                              attribute:NSLayoutAttributeRightMargin
+                                              multiplier:1.0
+                                              constant:0.0];
+        [constraintsMutArr addObject:xRightPosConstraint];
 
+        NSLayoutConstraint *yBotPosConstraint = [NSLayoutConstraint
+                                              constraintWithItem:self.tableView
+                                              attribute:NSLayoutAttributeBottom
+                                              relatedBy:NSLayoutRelationEqual
+                                              toItem:self.bottomLayoutGuide
+                                              attribute:NSLayoutAttributeTop
+                                              multiplier:1.0
+                                              constant:-20.0];
+        [constraintsMutArr addObject:yBotPosConstraint];
+        
+        
+        [self.view addConstraints:constraintsMutArr];
+        
     }
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(roundComplete)
                name:timerCompletedNotification
              object:nil];
-    
-    
     
     return self;
 }
