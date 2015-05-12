@@ -32,10 +32,10 @@
 - (void)roundSelected  {
     Timer *currentTimer = [Timer sharedInstance];
     NSArray *newArray = [self roundTimes];
-    currentTimer.minutes = newArray[self.currentRound];
+    currentTimer.minutes = [newArray[self.currentRound] integerValue];
     currentTimer.seconds = 0;
     NSNotificationCenter *vc = [NSNotificationCenter defaultCenter];
-    [vc addObserver:self selector:@selector(updateTimerLabel) name:newRoundNotification object:nil];
+    [vc addObserver:self selector:@selector(updateTimerLabel) name:(NSString *)newRoundNotification object:nil];
     
 
 }

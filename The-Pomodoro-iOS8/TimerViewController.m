@@ -17,13 +17,13 @@
 
 - (void)updateTimerLabel  {
     Timer *timer = [Timer sharedInstance];
-    self.timerLabel.text = [NSString stringWithFormat:@"%d:%d", timer.minutes, timer.seconds];
+    self.timerLabel.text = [NSString stringWithFormat:@"%.2d:%.2d", (int)timer.minutes, (int)timer.seconds];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSNotificationCenter *vc = [NSNotificationCenter defaultCenter];
-                                [vc addObserver:self selector:@selector(updateTimerLabel) name:secondTickNotification object:nil];
+                                [vc addObserver:self selector:@selector(updateTimerLabel) name:(NSString *)secondTickNotification object:nil];
 
 }
 

@@ -53,17 +53,18 @@
 - (void)endTimer  {
     self.isOn = NO;
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:timerCompletedNotification object:self userInfo:nil];
+    [nc postNotificationName:(NSString *)timerCompletedNotification object:self userInfo:nil];
 }
 
 - (void)decreaseSecond  {
     self.seconds--;
     if (self.seconds < 0) {
-        if (--self.minutes < 0) {
+        self.minutes--;
+        if (self.minutes < 0) {
             [self endTimer];
             
-            self.minutes = -1;
-            self.seconds = -1;
+            self.minutes = 0;
+            self.seconds = 0;
             
             
         }else{
@@ -73,7 +74,7 @@
         
     }
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:secondTickNotification object:self userInfo:nil];
+    [nc postNotificationName:(NSString *)secondTickNotification object:self userInfo:nil];
     
     
 }

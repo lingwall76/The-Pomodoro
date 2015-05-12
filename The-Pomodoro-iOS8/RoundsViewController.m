@@ -50,7 +50,7 @@
     
     NSArray *array = [roundsController roundTimes];
 
-    tableViewCell.textLabel.text = [NSString stringWithFormat:@"%d", (int)array[indexPath.row]];
+    tableViewCell.textLabel.text = [NSString stringWithFormat:@"%d minutes", (int)[array[indexPath.row] integerValue]];
     return tableViewCell;
 }
 
@@ -122,7 +122,7 @@
     }
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(roundComplete)
-               name:timerCompletedNotification
+               name:(NSString *)timerCompletedNotification
              object:nil];
     
     return self;
