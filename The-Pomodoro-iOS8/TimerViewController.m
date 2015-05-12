@@ -8,6 +8,7 @@
 
 #import "TimerViewController.h"
 #import "Timer.h"
+#import "RoundsController.h"
 
 @interface TimerViewController ()
 
@@ -36,7 +37,7 @@
     Timer *timer = [Timer sharedInstance];
     
     if (!timer.isOn) {
-    [timer startTimer];
+        [timer startTimer];
     }
 }
 
@@ -45,7 +46,7 @@
     if (self) {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(newRound)
-               name:newRoundNotification
+               name:(NSString *)newRoundNotification
              object:nil];
     }
     return self;
@@ -53,7 +54,11 @@
 
 - (void)newRound  {
    Timer *newTimer = [Timer sharedInstance];
-   //newTimer.isOn = YES;
+    RoundsController *rc = [RoundsController sharedInstance];
+    NSArray *roundTimesArr = [rc roundTimes];
+    newTimer.minutes = [roundTimesArr[rc.currentRound] integerValue];
+    newTimer.seconds = 0;
+    [newTimer startTimer];
 }
     
 /*

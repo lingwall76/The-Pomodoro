@@ -14,7 +14,6 @@
 
 - (NSArray *)roundTimes  {
     return @[@25, @5, @25, @5, @25, @5, @25, @15];
-    
 }
 
 + (instancetype)sharedInstance
@@ -26,7 +25,6 @@
     });
     
     return sharedInstance;
-    
 }
 
 - (void)roundSelected  {
@@ -36,11 +34,12 @@
     currentTimer.seconds = 0;
     NSNotificationCenter *vc = [NSNotificationCenter defaultCenter];
     [vc addObserver:self selector:@selector(updateTimerLabel) name:(NSString *)newRoundNotification object:nil];
-    
-
 }
 
-
+-(void)updateTimerLabel
+{
+    Timer *currentTimer = [Timer sharedInstance];
+}
 
 
 @end

@@ -9,6 +9,7 @@
 #import "Timer.h"
 
 @interface Timer ()
+
 @property (nonatomic, readwrite) BOOL isOn;
 
 
@@ -26,8 +27,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[Timer alloc] init];
-        sharedInstance.minutes = 2;
-        sharedInstance.seconds = 1;
+        sharedInstance.minutes = 15;
+        sharedInstance.seconds = 0;
     });
     
     return sharedInstance;
@@ -57,26 +58,22 @@
 }
 
 - (void)decreaseSecond  {
-    self.seconds--;
-    if (self.seconds < 0) {
-        self.minutes--;
-        if (self.minutes < 0) {
-            [self endTimer];
-            
-            self.minutes = 0;
-            self.seconds = 0;
-            
-            
-        }else{
-            self.seconds = 59;
-            
+    if (self.isOn) {
+        self.seconds--;
+        if (self.seconds < 0) {
+            self.minutes--;
+            if (self.minutes < 0) {
+                [self endTimer];
+                
+                self.minutes = 0;
+                self.seconds = 0;
+            }else{
+                self.seconds = 59;
+            }
         }
-        
     }
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:(NSString *)secondTickNotification object:self userInfo:nil];
-    
-    
 }
 
 - (void)cancelTimer  {

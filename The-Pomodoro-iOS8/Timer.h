@@ -18,6 +18,7 @@ static const NSString * timerCompletedNotification = @"TimerCompletedNotificatio
 
 @property (nonatomic) NSInteger minutes;
 @property (nonatomic) NSInteger seconds;
+
 @property (nonatomic, readonly) BOOL isOn;
 
 
