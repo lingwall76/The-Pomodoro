@@ -32,6 +32,10 @@
 {
     self.timerLabel.font = [UIFont fontWithName:@"Chalkduster" size:48.0];
     self.timerLabel.text = @"00:00";
+
+    self.timerButton.titleLabel.font = [UIFont fontWithName:@"Chalkduster" size:32.0];
+    [self.timerButton setTitle:@"Start Timer" forState:UIControlStateNormal];
+    [self.timerButton setTitle:@"Start Timer" forState:UIControlStateHighlighted];
 }
 
 - (void)dealloc {
