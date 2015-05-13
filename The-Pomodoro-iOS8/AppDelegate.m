@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "TimerViewController.h"
 #import "RoundsViewController.h"
+#import "CustomTabBarController.h"
 
 @interface AppDelegate ()
 
@@ -21,17 +22,17 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    //UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    CustomTabBarController *tabBarController = [[CustomTabBarController alloc] init];
     
     TimerViewController *timerVC = [[TimerViewController alloc] init];
-    timerVC.tabBarItem.title = @"Timer";
+    //timerVC.tabBarItem.title = @"Timer";
     timerVC.view.backgroundColor = [UIColor blueColor];
     timerVC.tabBarItem.image = [UIImage imageNamed:@"Clock"];
     
-    
-    
+
     RoundsViewController *roundsVC = [[RoundsViewController alloc] init];
-    roundsVC.tabBarItem.title = @"Rounds";
+    //roundsVC.tabBarItem.title = @"Rounds";
     roundsVC.view.backgroundColor = [UIColor greenColor];
     roundsVC.tabBarItem.image = [UIImage imageNamed:@"Tomato"];
     

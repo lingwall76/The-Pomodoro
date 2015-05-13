@@ -11,15 +11,11 @@
 #import "Timer.h"
 
 
-
 @interface RoundsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
 @implementation RoundsViewController
-
-
-
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath  {
