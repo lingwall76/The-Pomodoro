@@ -38,14 +38,27 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
     UITableViewCell *tableViewCell = [tableView dequeueReusableCellWithIdentifier:@"tableViewCellID"];
     
+    RoundsController *roundsController = [RoundsController sharedInstance];
+    NSArray *array = [roundsController roundTimes];
+    
     if (tableViewCell == nil) {
         tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tableViewCellID"];
     
+        if ([array[indexPath.row] integerValue] >= 25)
+        {
+            tableViewCell.accessoryView = [[UIImageView alloc ] initWithImage:[UIImage imageNamed:@"Work"]];
+        }
+        else if ([array[indexPath.row] integerValue] >= 15)
+        {
+            tableViewCell.accessoryView = [[UIImageView alloc ] initWithImage:[UIImage imageNamed:@"Play"]];
+        }
+        else
+        {
+            tableViewCell.accessoryView = [[UIImageView alloc ] initWithImage:[UIImage imageNamed:@"Sleep"]];
+        }
+        
     }
-    RoundsController *roundsController = [RoundsController sharedInstance];
     
-    NSArray *array = [roundsController roundTimes];
-
     tableViewCell.textLabel.text = [NSString stringWithFormat:@"%d minutes", (int)[array[indexPath.row] integerValue]];
     return tableViewCell;
 }
