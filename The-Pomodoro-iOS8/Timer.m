@@ -12,16 +12,12 @@
 
 @property (nonatomic, readwrite) BOOL isOn;
 
-
 @end
 
 
 @implementation Timer
 
-
-
 + (instancetype)sharedInstance
-
 {
     static Timer *sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -30,11 +26,7 @@
         sharedInstance.minutes = 15;
         sharedInstance.seconds = 0;
     });
-    
     return sharedInstance;
-    
-
-    
 }
 
 - (void)checkActive  {
@@ -48,7 +40,6 @@
 - (void)startTimer {
     self.isOn = YES;
     [self checkActive];
-    
 }
 
 - (void)endTimer  {
@@ -67,18 +58,17 @@
                 
                 self.minutes = 0;
                 self.seconds = 0;
-            }else{
+            } else {
                 self.seconds = 59;
             }
         }
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc postNotificationName:(NSString *)secondTickNotification object:self userInfo:nil];
     }
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:(NSString *)secondTickNotification object:self userInfo:nil];
 }
 
 - (void)cancelTimer  {
     self.isOn = NO;
-    
 }
 
 @end

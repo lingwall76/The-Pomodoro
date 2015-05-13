@@ -21,13 +21,8 @@ static const NSString * timerCompletedNotification = @"TimerCompletedNotificatio
 
 @property (nonatomic, readonly) BOOL isOn;
 
-
-
 + (instancetype)sharedInstance;
 - (void)startTimer;
 - (void)cancelTimer;
-
-
-
 
 @end

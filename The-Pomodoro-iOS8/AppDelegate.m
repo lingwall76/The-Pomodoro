@@ -22,8 +22,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     
-    //UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    CustomTabBarController *tabBarController = [[CustomTabBarController alloc] init];
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    //CustomTabBarController *tabBarController = [[CustomTabBarController alloc] init];
     
     TimerViewController *timerVC = [[TimerViewController alloc] init];
     //timerVC.tabBarItem.title = @"Timer";

@@ -19,13 +19,19 @@
 - (void)updateTimerLabel  {
     Timer *timer = [Timer sharedInstance];
     self.timerLabel.text = [NSString stringWithFormat:@"%.2d:%.2d", (int)timer.minutes, (int)timer.seconds];
+    //self.timerLabel.font = [[UIFont alloc] fontWithName:@"Chalkduster"];    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSNotificationCenter *vc = [NSNotificationCenter defaultCenter];
                                 [vc addObserver:self selector:@selector(updateTimerLabel) name:(NSString *)secondTickNotification object:nil];
+}
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.timerLabel.font = [UIFont fontWithName:@"Chalkduster" size:48.0];
+    self.timerLabel.text = @"00:00";
 }
 
 - (void)dealloc {
@@ -43,11 +49,14 @@
 
 - (instancetype)init {
     self = [super init];
+    NSLog(@"init got called");
     if (self) {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(newRound)
-               name:(NSString *)newRoundNotification
-             object:nil];
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(newRound)
+                   name:(NSString *)newRoundNotification
+                 object:nil];
+        
+        NSLog(@"inside self");
     }
     return self;
 }
