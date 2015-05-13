@@ -22,6 +22,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[RoundsController alloc] init];
+        sharedInstance.currentRound = 0;
     });
     
     return sharedInstance;

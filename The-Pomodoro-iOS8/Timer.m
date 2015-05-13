@@ -23,7 +23,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[Timer alloc] init];
-        sharedInstance.minutes = 15;
+        sharedInstance.minutes = 25;
         sharedInstance.seconds = 0;
     });
     return sharedInstance;

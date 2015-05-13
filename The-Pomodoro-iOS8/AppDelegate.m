@@ -27,7 +27,7 @@
     
     TimerViewController *timerVC = [[TimerViewController alloc] init];
     //timerVC.tabBarItem.title = @"Timer";
-    timerVC.view.backgroundColor = [UIColor blueColor];
+    timerVC.view.backgroundColor = [UIColor yellowColor];
     timerVC.tabBarItem.image = [UIImage imageNamed:@"Clock"];
     
 

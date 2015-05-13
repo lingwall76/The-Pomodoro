@@ -31,9 +31,18 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     self.timerLabel.font = [UIFont fontWithName:@"Chalkduster" size:48.0];
-    self.timerLabel.text = @"00:00";
+    
+    RoundsController *rc = [RoundsController sharedInstance];
+    
+    if (rc) {
+        self.timerLabel.text = [NSString stringWithFormat:@"%.2d:%.2d", [rc.roundTimes[rc.currentRound] integerValue], 0];
+    } else {
+        self.timerLabel.text = @"00:00";
+    }
+    self.timerLabel.textColor = [UIColor blackColor];
 
     self.timerButton.titleLabel.font = [UIFont fontWithName:@"Chalkduster" size:32.0];
+    self.timerButton.titleLabel.textColor = [UIColor blackColor];
     [self.timerButton setTitle:@"Start Timer" forState:UIControlStateNormal];
     [self.timerButton setTitle:@"Start Timer" forState:UIControlStateHighlighted];
 }
