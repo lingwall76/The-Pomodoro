@@ -86,4 +86,21 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Timer Expired" message:@"nextRound?" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *option1 = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:^{}];
+    }];
+    [alertController addAction:option1];
+    
+    id rootViewController=[UIApplication sharedApplication].delegate.window.rootViewController;
+    if([rootViewController isKindOfClass:[UITabBarController class]])
+    {
+        rootViewController=[((UITabBarController *)rootViewController).viewControllers objectAtIndex:0];
+    }
+    [rootViewController presentViewController:alertController animated:YES completion:nil];
+}
+
 @end
