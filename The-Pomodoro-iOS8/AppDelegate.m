@@ -36,8 +36,11 @@
     roundsVC.view.backgroundColor = [UIColor greenColor];
     roundsVC.tabBarItem.image = [UIImage imageNamed:@"Tomato"];
     
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:roundsVC];
     
-    tabBarController.viewControllers = @[timerVC, roundsVC];
+    
+    //tabBarController.viewControllers = @[timerVC, roundsVC];
+    tabBarController.viewControllers = @[timerVC, nc];
     self.window.rootViewController = tabBarController;
     
     
