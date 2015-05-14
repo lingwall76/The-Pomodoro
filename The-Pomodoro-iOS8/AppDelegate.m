@@ -10,6 +10,7 @@
 #import "TimerViewController.h"
 #import "RoundsViewController.h"
 #import "CustomTabBarController.h"
+#import "AppearanceController.h"
 
 @interface AppDelegate ()
 
@@ -37,9 +38,11 @@
     roundsVC.view.backgroundColor = [UIColor greenColor];
     roundsVC.tabBarItem.image = [UIImage imageNamed:@"Tomato"];
     roundsVC.tabBarItem.title = @"Rounds";
+    //roundsVC.title = @"Rounds";
     
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:roundsVC];
-    
+    nc.title = @"Rounds";
+    [AppearanceController initializeAppearanceDefaults];
     
     //tabBarController.viewControllers = @[timerVC, roundsVC];
     tabBarController.viewControllers = @[timerVC, nc];

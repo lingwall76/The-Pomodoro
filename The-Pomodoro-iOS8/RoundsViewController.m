@@ -63,24 +63,9 @@ static const NSString *kCellID = @"tableViewCellID";
 }
 
 
-- (instancetype)init  {
-    self = [super init];
-    
-    if (self.view) {
-        NSLog(@"self.view exists!");
-    } else {
-        NSLog(@"self.view doesn't exist!");
-    }
-    
-    if (self) {
-        self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
-        
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        
-        [self.view addSubview:self.tableView];
-        
-        NSMutableArray *constraintsMutArr = [NSMutableArray new];
+- (void) doAutoLayoutConstraints
+{
+            NSMutableArray *constraintsMutArr = [NSMutableArray new];
         
         [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
         NSLayoutConstraint *xLeftPosConstraint = [NSLayoutConstraint
@@ -125,11 +110,29 @@ static const NSString *kCellID = @"tableViewCellID";
         [constraintsMutArr addObject:yBotPosConstraint];
         
         
-        [self.view addConstraints:constraintsMutArr];
-        
-    }
-    [self registerNotifications];
+    [self.view addConstraints:constraintsMutArr];
+}
+
+- (instancetype)init  {
+    self = [super init];
     
+    /*if (self.view) {
+        NSLog(@"self.view exists!");
+    } else {
+        NSLog(@"self.view doesn't exist!");
+    }*/
+    
+    if (self) {
+        self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
+        
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        
+        [self.view addSubview:self.tableView];
+        
+        //[self doAutoLayoutConstraints];
+        [self registerNotifications];
+    }
     return self;
 }
 
