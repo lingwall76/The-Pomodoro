@@ -48,12 +48,14 @@
     notification.soundName = UILocalNotificationDefaultSoundName;
     notification.alertBody = @"Time's Up!";
     
-    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+/*    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                     UIUserNotificationTypeBadge |
-                                                    UIUserNotificationTypeSound);
+ UIUserNotificationTypeSound);
+
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes                                                                             categories:nil];
     
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+ [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+*/
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     
     self.isOn = YES;
@@ -92,6 +94,8 @@
 - (void)cancelTimer  {
     self.isOn = NO;
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
 @end

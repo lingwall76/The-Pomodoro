@@ -11,6 +11,7 @@
 #import "RoundsViewController.h"
 #import "CustomTabBarController.h"
 #import "AppearanceController.h"
+#import <UIKit/UIKit.h>
 
 @interface AppDelegate ()
 
@@ -71,6 +72,14 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                        UIUserNotificationTypeSound);
+    
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes                                                                             categories:nil];
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
