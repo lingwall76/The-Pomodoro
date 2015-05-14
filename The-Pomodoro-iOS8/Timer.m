@@ -23,8 +23,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[Timer alloc] init];
-        sharedInstance.minutes = 0;
-        sharedInstance.seconds = 3;
+        //sharedInstance.minutes = 0;
+        //sharedInstance.seconds = 3;
     });
     return sharedInstance;
 }
@@ -42,6 +42,10 @@
     [self checkActive];
 }
 
+- (void)enableButton {
+    self.isOn = YES;
+}
+
 - (void)endTimer  {
     self.isOn = NO;
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -54,10 +58,10 @@
         if (self.seconds < 0) {
             self.minutes--;
             if (self.minutes < 0) {
-                [self endTimer];
-                
                 self.minutes = 0;
                 self.seconds = 0;
+                
+                [self endTimer];
             } else {
                 self.seconds = 59;
             }
@@ -69,6 +73,7 @@
 
 - (void)cancelTimer  {
     self.isOn = NO;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 @end

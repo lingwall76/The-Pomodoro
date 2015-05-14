@@ -29,12 +29,14 @@
     //timerVC.tabBarItem.title = @"Timer";
     timerVC.view.backgroundColor = [UIColor yellowColor];
     timerVC.tabBarItem.image = [UIImage imageNamed:@"Clock"];
+    timerVC.tabBarItem.title = @"Timer";
     
 
     RoundsViewController *roundsVC = [[RoundsViewController alloc] init];
     //roundsVC.tabBarItem.title = @"Rounds";
     roundsVC.view.backgroundColor = [UIColor greenColor];
     roundsVC.tabBarItem.image = [UIImage imageNamed:@"Tomato"];
+    roundsVC.tabBarItem.title = @"Rounds";
     
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:roundsVC];
     

@@ -24,8 +24,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)registerForNotifications
+{
     NSNotificationCenter *vc = [NSNotificationCenter defaultCenter];
-                                [vc addObserver:self selector:@selector(updateTimerLabel) name:(NSString *)secondTickNotification object:nil];
+    
+    [vc addObserver:self selector:@selector(updateTimerLabel) name:(NSString *)secondTickNotification object:nil];
+    [vc addObserver:self selector:@selector(newRound) name:(NSString *)newRoundNotification object:nil];
+    [vc addObserver:self selector:@selector(newRound) name:(NSString *)timerCompletedNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -35,7 +42,7 @@
     RoundsController *rc = [RoundsController sharedInstance];
     
     if (rc) {
-        self.timerLabel.text = [NSString stringWithFormat:@"%.2d:%.2d", [rc.roundTimes[rc.currentRound] integerValue], 0];
+        self.timerLabel.text = [NSString stringWithFormat:@"%.2d:%.2d", (int)[rc.roundTimes[rc.currentRound] integerValue], 0];
     } else {
         self.timerLabel.text = @"00:00";
     }
@@ -62,14 +69,9 @@
 
 - (instancetype)init {
     self = [super init];
-    NSLog(@"init got called");
+    
     if (self) {
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(newRound)
-                   name:(NSString *)newRoundNotification
-                 object:nil];
-        
-        NSLog(@"inside self");
+        [self registerForNotifications];
     }
     return self;
 }
@@ -80,7 +82,7 @@
     NSArray *roundTimesArr = [rc roundTimes];
     newTimer.minutes = [roundTimesArr[rc.currentRound] integerValue];
     newTimer.seconds = 0;
-    [newTimer startTimer];
+    [newTimer enableButton];
 }
     
 /*

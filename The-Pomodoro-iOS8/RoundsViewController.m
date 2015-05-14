@@ -10,6 +10,7 @@
 #import "RoundsController.h"
 #import "Timer.h"
 
+static const NSString *kCellID = @"tableViewCellID";
 
 @interface RoundsViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -32,17 +33,16 @@
     
     NSArray *array = [roundsController roundTimes];
     return [array count];
-    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
-    UITableViewCell *tableViewCell = [tableView dequeueReusableCellWithIdentifier:@"tableViewCellID"];
+    UITableViewCell *tableViewCell = [tableView dequeueReusableCellWithIdentifier:(NSString *)kCellID];
     
     RoundsController *roundsController = [RoundsController sharedInstance];
     NSArray *array = [roundsController roundTimes];
     
     if (tableViewCell == nil) {
-        tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tableViewCellID"];
+        tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:(NSString *)kCellID];
     
         if ([array[indexPath.row] integerValue] >= 25)
         {
@@ -56,7 +56,6 @@
         {
             tableViewCell.accessoryView = [[UIImageView alloc ] initWithImage:[UIImage imageNamed:@"Sleep"]];
         }
-        
     }
     
     tableViewCell.textLabel.text = [NSString stringWithFormat:@"%d minutes", (int)[array[indexPath.row] integerValue]];
@@ -74,12 +73,12 @@
     }
     
     if (self) {
-        self.tableView = [UITableView new];
-        [self.view addSubview:self.tableView];
+        self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
         
-        self.tableView.frame = [[UIScreen mainScreen] bounds];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
+        
+        [self.view addSubview:self.tableView];
         
         NSMutableArray *constraintsMutArr = [NSMutableArray new];
         
@@ -129,38 +128,32 @@
         [self.view addConstraints:constraintsMutArr];
         
     }
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(roundComplete)
-               name:(NSString *)timerCompletedNotification
-             object:nil];
+    [self registerNotifications];
     
     return self;
 }
 
+- (void)registerNotifications {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(roundComplete)
+               name:(NSString *)timerCompletedNotification
+             object:nil];
+}
 
 - (void)roundComplete {
+    
     RoundsController *roundsController = [RoundsController sharedInstance];
     NSArray *array = [roundsController roundTimes];
-    if (roundsController.currentRound >= [array count])
     
+    roundsController.currentRound++;
+    if (roundsController.currentRound >= [array count])
     {
         roundsController.currentRound = 0;
-        NSIndexPath *newObject = [NSIndexPath indexPathForRow:roundsController.currentRound inSection:0];
-    
-        
-        [self.tableView selectRowAtIndexPath:newObject animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-        [roundsController roundSelected];
-    
-    }else{
-        
-        roundsController.currentRound++;
-        NSIndexPath *newObject = [NSIndexPath indexPathForRow:roundsController.currentRound inSection:0];
-
-        
-        [self.tableView selectRowAtIndexPath:newObject animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-        [roundsController roundSelected];
-        
     }
+
+    NSIndexPath *newObject = [NSIndexPath indexPathForRow:roundsController.currentRound inSection:0];
+    [self.tableView selectRowAtIndexPath:newObject animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+    [roundsController roundSelected];
 }
 
 - (void)viewDidLoad {

@@ -24,5 +24,6 @@ static const NSString * timerCompletedNotification = @"TimerCompletedNotificatio
 + (instancetype)sharedInstance;
 - (void)startTimer;
 - (void)cancelTimer;
+- (void)enableButton;
 
 @end
