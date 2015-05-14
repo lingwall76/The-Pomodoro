@@ -7,10 +7,12 @@
 //
 
 #import "Timer.h"
+#import "RoundsController.h"
 
 @interface Timer ()
 
 @property (nonatomic, readwrite) BOOL isOn;
+@property (nonatomic, readwrite) NSDate *expirationDate;
 
 @end
 
@@ -38,6 +40,22 @@
 }
 
 - (void)startTimer {
+    int secondsInTheFuture = (int)((self.seconds*60) + self.minutes);
+    self.expirationDate = [NSDate dateWithTimeIntervalSinceNow:secondsInTheFuture]; // time when timer when will expire
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.fireDate = self.expirationDate;
+    notification.timeZone = [NSTimeZone timeZoneWithName:@"MST"];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    notification.alertBody = @"Time's Up!";
+    
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes                                                                             categories:nil];
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    
     self.isOn = YES;
     [self checkActive];
 }

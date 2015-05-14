@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 static const NSString * newRoundNotification = @"NewRoundNotification";
 static const NSString * secondTickNotification = @"SecondTickNotification";
