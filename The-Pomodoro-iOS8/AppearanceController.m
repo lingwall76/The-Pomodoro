@@ -16,7 +16,7 @@
     // Update navigationBar title font and text color
     // Update the tint color on the tab bar
     [[UINavigationBar appearance] setBarTintColor:[UIColor orangeColor]];
-    [UINavigationBar appearance].titleTextAttributes = @{NSFontAttributeName:@"Helvetica"};
+    [UINavigationBar appearance].titleTextAttributes = @{NSFontAttributeName:[UIFont fontWithName:@"Chalkduster" size:20.0]};
 }
 
 @end

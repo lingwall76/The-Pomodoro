@@ -38,7 +38,7 @@
     roundsVC.view.backgroundColor = [UIColor greenColor];
     roundsVC.tabBarItem.image = [UIImage imageNamed:@"Tomato"];
     roundsVC.tabBarItem.title = @"Rounds";
-    //roundsVC.title = @"Rounds";
+    roundsVC.title = @"Rounds";
     
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:roundsVC];
     nc.title = @"Rounds";
