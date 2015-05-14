@@ -16,6 +16,10 @@
     return @[@25, @5, @25, @5, @25, @5, @25, @15];
 }
 
+- (NSArray *)imageNames {
+    return @[@"Work", @"Play", @"Work", @"Play", @"Work", @"Play", @"Work", @"Sleep"];
+}
+
 + (instancetype)sharedInstance
 {
     static RoundsController *sharedInstance = nil;

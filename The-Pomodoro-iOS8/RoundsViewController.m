@@ -43,8 +43,9 @@ static const NSString *kCellID = @"tableViewCellID";
     
     if (tableViewCell == nil) {
         tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:(NSString *)kCellID];
-    
-        if ([array[indexPath.row] integerValue] >= 25)
+        tableViewCell.imageView.image = [UIImage imageNamed:[roundsController imageNames][indexPath.row]];
+        
+        /*if ([array[indexPath.row] integerValue] >= 25)
         {
             tableViewCell.accessoryView = [[UIImageView alloc ] initWithImage:[UIImage imageNamed:@"Work"]];
         }
@@ -55,7 +56,7 @@ static const NSString *kCellID = @"tableViewCellID";
         else
         {
             tableViewCell.accessoryView = [[UIImageView alloc ] initWithImage:[UIImage imageNamed:@"Sleep"]];
-        }
+        }*/
     }
     
     tableViewCell.textLabel.text = [NSString stringWithFormat:@"%d minutes", (int)[array[indexPath.row] integerValue]];

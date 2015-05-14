@@ -18,5 +18,6 @@
 
 + (instancetype)sharedInstance;
 - (void)roundSelected;
+- (NSArray *)imageNames;
 
 @end
