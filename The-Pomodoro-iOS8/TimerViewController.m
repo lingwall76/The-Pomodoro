@@ -16,14 +16,22 @@
 
 @implementation TimerViewController
 
-- (void)updateTimerLabel  {
-    Timer *timer = [Timer sharedInstance];
-    self.timerLabel.text = [NSString stringWithFormat:@"%.2d:%.2d", (int)timer.minutes, (int)timer.seconds];
-    //self.timerLabel.font = [[UIFont alloc] fontWithName:@"Chalkduster"];    
+- (instancetype)init {
+    self = [super init];
+    
+    if (self) {
+        [self registerForNotifications];
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)updateTimerLabel  {
+    Timer *timer = [Timer sharedInstance];
+    self.timerLabel.text = [NSString stringWithFormat:@"%.2d:%.2d", (int)timer.minutes, (int)timer.seconds];
 }
 
 - (void)registerForNotifications
@@ -32,26 +40,18 @@
     
     [vc addObserver:self selector:@selector(updateTimerLabel) name:(NSString *)secondTickNotification object:nil];
     [vc addObserver:self selector:@selector(newRound) name:(NSString *)newRoundNotification object:nil];
-    [vc addObserver:self selector:@selector(newRound) name:(NSString *)timerCompletedNotification object:nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     self.timerLabel.font = [UIFont fontWithName:@"Chalkduster" size:48.0];
-    
-    RoundsController *rc = [RoundsController sharedInstance];
-    
-    if (rc) {
-        self.timerLabel.text = [NSString stringWithFormat:@"%.2d:%.2d", (int)[rc.roundTimes[rc.currentRound] integerValue], 0];
-    } else {
-        self.timerLabel.text = @"00:00";
-    }
     self.timerLabel.textColor = [UIColor blackColor];
 
     self.timerButton.titleLabel.font = [UIFont fontWithName:@"Chalkduster" size:32.0];
     self.timerButton.titleLabel.textColor = [UIColor blackColor];
     [self.timerButton setTitle:@"Start Timer" forState:UIControlStateNormal];
     [self.timerButton setTitle:@"Start Timer" forState:UIControlStateHighlighted];
+    [self updateTimerLabel];
 }
 
 - (void)dealloc {
@@ -62,29 +62,22 @@
 - (IBAction)timerTapped:(id)sender {
     Timer *timer = [Timer sharedInstance];
     
-    if (!timer.isOn) {
-        [timer startTimer];
-    }
+    self.timerButton.enabled = NO;
+    [timer startTimer];
 }
 
-- (instancetype)init {
-    self = [super init];
-    
-    if (self) {
-        [self registerForNotifications];
-    }
-    return self;
-}
-
-- (void)newRound  {
-   Timer *newTimer = [Timer sharedInstance];
+- (void)newRound {
+    Timer *newTimer = [Timer sharedInstance];
     RoundsController *rc = [RoundsController sharedInstance];
     NSArray *roundTimesArr = [rc roundTimes];
     newTimer.minutes = [roundTimesArr[rc.currentRound] integerValue];
     newTimer.seconds = 0;
-    [newTimer enableButton];
-}
     
+    [newTimer cancelTimer];
+    self.timerButton.enabled = YES;
+    [self updateTimerLabel];
+}
+
 /*
 #pragma mark - Navigation
 

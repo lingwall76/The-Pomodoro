@@ -27,6 +27,10 @@
         sharedInstance = [[Timer alloc] init];
         //sharedInstance.minutes = 0;
         //sharedInstance.seconds = 3;
+        
+        RoundsController *rc = [RoundsController new];
+        sharedInstance.minutes = [rc.roundTimes[0] integerValue];
+        sharedInstance.seconds = 0;
     });
     return sharedInstance;
 }
@@ -60,10 +64,6 @@
     
     self.isOn = YES;
     [self checkActive];
-}
-
-- (void)enableButton {
-    self.isOn = YES;
 }
 
 - (void)endTimer  {

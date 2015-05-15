@@ -25,7 +25,9 @@ static const NSString *kCellID = @"tableViewCellID";
     [roundsController roundSelected];
     Timer *timerController = [Timer sharedInstance];
     [timerController cancelTimer];
-
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:(NSString *)newRoundNotification object:self userInfo:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section  {

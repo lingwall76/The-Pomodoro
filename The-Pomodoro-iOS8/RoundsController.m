@@ -47,6 +47,9 @@
 -(void)updateTimerLabel
 {
     Timer *currentTimer = [Timer sharedInstance];
+    RoundsController *rc = [RoundsController sharedInstance];
+    currentTimer.minutes = [rc.roundTimes[rc.currentRound] integerValue];
+    currentTimer.seconds = 0;
 }
 
 
