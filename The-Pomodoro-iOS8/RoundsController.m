@@ -14,6 +14,7 @@
 
 - (NSArray *)roundTimes  {
     return @[@25, @5, @25, @5, @25, @5, @25, @15];
+    //return @[@1, @2, @3, @4, @5, @6, @7, @8];
 }
 
 - (NSArray *)imageNames {
@@ -37,6 +38,8 @@
     NSArray *newArray = [self roundTimes];
     currentTimer.minutes = [newArray[self.currentRound] integerValue];
     currentTimer.seconds = 0;
+    //currentTimer.minutes = 0;
+    //currentTimer.seconds = [newArray[self.currentRound] integerValue];
     NSNotificationCenter *vc = [NSNotificationCenter defaultCenter];
     [vc addObserver:self selector:@selector(updateTimerLabel) name:(NSString *)newRoundNotification object:nil];
 }

@@ -98,4 +98,23 @@
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
+- (void)prepareForBackground
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:[NSNumber numberWithInt:(int)self.minutes] forKey:@"minutesKey"];
+    [defaults setObject:[NSNumber numberWithInt:(int)self.seconds] forKey:@"secondsKey"];
+    
+    [defaults synchronize];
+}
+
+- (void)loadFromBackground
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    self.minutes = [[defaults objectForKey:@"minutesKey"] integerValue];
+    self.seconds = [[defaults objectForKey:@"secondsKey"] integerValue];
+}
+
+
 @end

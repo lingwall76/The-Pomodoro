@@ -11,6 +11,7 @@
 #import "RoundsViewController.h"
 #import "CustomTabBarController.h"
 #import "AppearanceController.h"
+#import "Timer.h"
 #import <UIKit/UIKit.h>
 
 @interface AppDelegate ()
@@ -64,10 +65,17 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    Timer *timer = [Timer sharedInstance];
+    
+    [timer prepareForBackground];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    Timer *timer = [Timer sharedInstance];
+    
+    [timer loadFromBackground];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -88,12 +96,23 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Timer Expired" message:@"nextRound?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Timer Expired" message:@"What to do?" preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *option1 = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [alertController dismissViewControllerAnimated:YES completion:^{}];
-    }];
+    UIAlertAction *option1 = [UIAlertAction actionWithTitle:@"Dismiss (Do Nothing)" style:UIAlertActionStyleDefault handler:^(UIAlertAction *   action) {
+            [alertController dismissViewControllerAnimated:YES completion:^{}];
+        }];
     [alertController addAction:option1];
+    
+        UIAlertAction *option2 = [UIAlertAction actionWithTitle:@"Next Round" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            Timer *timer = [Timer sharedInstance];
+    
+            [timer cancelTimer];
+            [timer startTimer];
+            [alertController dismissViewControllerAnimated:YES completion:^{}];
+        }];
+    [alertController addAction:option2];
+    
+    
     
     id rootViewController=[UIApplication sharedApplication].delegate.window.rootViewController;
     if([rootViewController isKindOfClass:[UITabBarController class]])
