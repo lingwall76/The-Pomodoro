@@ -29,8 +29,10 @@
         //sharedInstance.seconds = 3;
         
         RoundsController *rc = [RoundsController new];
-        sharedInstance.minutes = [rc.roundTimes[0] integerValue];
-        sharedInstance.seconds = 0;
+        //sharedInstance.minutes = [rc.roundTimes[0] integerValue];
+        //sharedInstance.seconds = 0;
+        sharedInstance.minutes = 0;
+        sharedInstance.seconds = [rc.roundTimes[0] integerValue];
     });
     return sharedInstance;
 }

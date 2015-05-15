@@ -40,6 +40,10 @@
     
     [vc addObserver:self selector:@selector(updateTimerLabel) name:(NSString *)secondTickNotification object:nil];
     [vc addObserver:self selector:@selector(newRound) name:(NSString *)newRoundNotification object:nil];
+    [vc addObserver:self selector:@selector(newRound)
+               name:(NSString *)timerCompletedNotification
+             object:nil];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,8 +74,10 @@
     Timer *newTimer = [Timer sharedInstance];
     RoundsController *rc = [RoundsController sharedInstance];
     NSArray *roundTimesArr = [rc roundTimes];
-    newTimer.minutes = [roundTimesArr[rc.currentRound] integerValue];
-    newTimer.seconds = 0;
+    //newTimer.minutes = [roundTimesArr[rc.currentRound] integerValue];
+    //newTimer.seconds = 0;
+    newTimer.minutes = 0;
+    newTimer.seconds = [roundTimesArr[rc.currentRound] integerValue];
     
     [newTimer cancelTimer];
     self.timerButton.enabled = YES;

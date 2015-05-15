@@ -135,6 +135,9 @@ static const NSString *kCellID = @"tableViewCellID";
         
         //[self doAutoLayoutConstraints];
         [self registerNotifications];
+
+        NSIndexPath *newObject = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView selectRowAtIndexPath:newObject animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     }
     return self;
 }
